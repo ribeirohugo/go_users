@@ -72,7 +72,7 @@ func TestRepeatedUserPhone(t *testing.T) {
 	}
 }
 
-func TestUserSucessfullyCreated(t *testing.T) {
+func TestUserSuccessfullyCreated(t *testing.T) {
 	flag, user := controller.CreateUserController(name, password, email, phone, timestamp, &users)
 
 	if !flag {
