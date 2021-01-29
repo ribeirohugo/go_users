@@ -26,14 +26,13 @@ func CreateUserUI(users *[]model.User) {
 	fmt.Scanf("%d", &timestamp)
 
 	var flag bool
-	var user *model.User
+	var user model.User
 
 	flag, user = controller.CreateUserController(name, password, email, phone, timestamp)
 
 	if flag {
-		var userObj = *user
-		fmt.Println("User: ", userObj)
-		*users = append(*users, userObj)
+		fmt.Println("User: ", user)
+		*users = append(*users, user)
 	} else {
 		fmt.Println("Erro ao registar utilizador.")
 	}

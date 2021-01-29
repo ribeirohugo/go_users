@@ -11,17 +11,22 @@ type User struct {
 func (u User) IsValid() bool {
 	var flag = true
 
-	if len(u.Name) < 2 || len(u.Name) > 255 {
+	if len(u.Name) < 3 || len(u.Name) > 255 {
 
 		flag = false
 	}
 
-	if u.Email == "" {
+	if len(u.Email) < 6 || len(u.Email) > 255 {
 
 		flag = false
 	}
 
 	if len(u.Password) < 6 || len(u.Password) > 24 {
+
+		flag = false
+	}
+
+	if len(u.Phone) < 6 {
 
 		flag = false
 	}

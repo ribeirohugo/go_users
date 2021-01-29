@@ -1,14 +1,16 @@
 package controller
 
-import "../model"
+import (
+	"../model"
+)
 
-func CreateUserController(name string, password string, email string, phone string, timestamp int) (bool, *model.User) {
+func CreateUserController(name string, password string, email string, phone string, timestamp int) (flag bool, usr model.User) {
 
 	var user = model.User{Name: name, Password: password, Email: email, Phone: phone, Timestamp: timestamp}
 
 	if !user.IsValid() {
-		return false, nil
+		return false, usr
 	}
 
-	return true, &user
+	return true, user
 }
