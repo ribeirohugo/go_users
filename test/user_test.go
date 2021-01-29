@@ -7,9 +7,14 @@ import (
 
 const name = "name"
 const password = "password"
-const email = "email"
-const phone = "phone"
+const email = "email@domain"
+const phone = "123456789"
 const timestamp = 20
+
+const nameInvalid = "na"
+const passwordInvalid = "pass"
+const emailInvalid = "mail"
+const phoneInvalid = "phone"
 
 var user = model.User{Name: name, Password: password, Email: email, Phone: phone, Timestamp: timestamp}
 
@@ -40,5 +45,37 @@ func TestPhone(t *testing.T) {
 func TestTimestamp(t *testing.T) {
 	if user.Timestamp != timestamp {
 		t.Errorf("User timestamp incorrect, got: %d, want: %d.", user.Timestamp, timestamp)
+	}
+}
+
+func TestInvalidName(t *testing.T) {
+	u := model.User{Name: nameInvalid, Password: password, Email: email, Phone: phone, Timestamp: timestamp}
+	flag := u.IsValid()
+	if flag {
+		t.Errorf("User name should return invalid. Got: %t, want: %t.", flag, false)
+	}
+}
+
+func TestInvalidPassword(t *testing.T) {
+	u := model.User{Name: name, Password: passwordInvalid, Email: email, Phone: phone, Timestamp: timestamp}
+	flag := u.IsValid()
+	if flag {
+		t.Errorf("User password should return invalid. Got: %t, want: %t.", flag, false)
+	}
+}
+
+func TestInvalidEmail(t *testing.T) {
+	u := model.User{Name: name, Password: password, Email: emailInvalid, Phone: phone, Timestamp: timestamp}
+	flag := u.IsValid()
+	if flag {
+		t.Errorf("User email should return invalid. Got: %t, want: %t.", flag, false)
+	}
+}
+
+func TestInvalidPhone(t *testing.T) {
+	u := model.User{Name: name, Password: password, Email: email, Phone: phoneInvalid, Timestamp: timestamp}
+	flag := u.IsValid()
+	if flag {
+		t.Errorf("User phone should be invalid. Got: %t, want: %t.", flag, false)
 	}
 }
