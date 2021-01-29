@@ -4,9 +4,14 @@ import (
 	"../model"
 )
 
-func RemoveUserController(position int, users *[]model.User) {
+func RemoveUserController(position int, users *[]model.User) bool {
 	var array = *users
 
-	array[position] = array[len(array)-1]
-	*users = array[:len(array)-1]
+	if position >= 0 && position < len(array) {
+		array[position] = array[len(array)-1]
+		*users = array[:len(array)-1]
+		return true
+	}
+
+	return false
 }
