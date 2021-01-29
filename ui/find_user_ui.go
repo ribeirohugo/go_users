@@ -16,10 +16,10 @@ func FindUserUI(users *[]model.User) {
 	fmt.Print("Enter phone: ")
 	fmt.Scanf("%s", &phone)
 
-	user, result := controller.FindUserController(email, phone, users)
+	user, position := controller.FindUserController(email, phone, users)
 
-	if result {
-		fmt.Println(user)
+	if position >= 0 {
+		fmt.Println(*user)
 	} else {
 		fmt.Println("No user found.")
 	}
