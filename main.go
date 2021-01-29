@@ -6,23 +6,24 @@ import (
 	"fmt"
 )
 
-const OPTIONS int = 6
+const OPTIONS int = 7
 
 var users []model.User
 
 func main() {
 
-	var option = 1
+	var option = 0
 
-	for option > 0 && option < OPTIONS {
+	for option != 6 {
 
 		fmt.Println("Seleccione uma opção:\n" +
 			"1 - Criar utilizador\n" +
 			"2 - Listar utilizadores \n" +
-			"3 - Actualizar utilizador \n" +
-			"4 - Carregar dados \n" +
-			"5 - Gravar dados \n" +
-			"6 - Sair")
+			"3 - Procurar utilizador \n" +
+			"4 - Actualizar utilizador \n" +
+			"5 - Carregar dados \n" +
+			"6 - Gravar dados \n" +
+			"7 - Sair")
 
 		fmt.Scanf("%d", &option)
 
@@ -32,12 +33,14 @@ func main() {
 		case 2:
 			ui.PrintUsersUI(users)
 		case 3:
-
+			ui.FindUserUI(&users)
 		case 4:
-			ui.ReadUsersUI(&users)
+
 		case 5:
-			ui.SaveUsersUI(users)
+			ui.ReadUsersUI(&users)
 		case 6:
+			ui.SaveUsersUI(users)
+		case 7:
 			break
 		default:
 			fmt.Println("Opção inválida.")
