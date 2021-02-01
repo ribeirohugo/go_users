@@ -55,11 +55,10 @@ func handleRequest(con net.Conn) {
 
 		if user.IsValid() {
 			if controller.AddUserController(user, &database) {
-				fmt.Println(user, " User successfully saved.")
+				fmt.Println(user, "User successfully saved.")
 			} else {
-				fmt.Println(user, " User already exist in database.")
+				fmt.Println(user, "User already exists in database.")
 			}
-
 		} else {
 			fmt.Println("Invalid user.")
 		}
