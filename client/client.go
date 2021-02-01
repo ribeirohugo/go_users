@@ -50,5 +50,5 @@ func main() {
 	}
 
 	err = con.Close()
-	handleError("Error closing connection. ", err)
+	handleFatalError("Error closing connection. ", err)
 }
