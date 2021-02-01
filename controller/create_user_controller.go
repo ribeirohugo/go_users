@@ -12,7 +12,25 @@ func CreateUserController(name string, password string, email string, phone stri
 		return false, usr
 	}
 
-	FindUserController(email, phone, users)
+	_, position := FindUserController(email, phone, users)
+	if position < 0 {
+		return false, usr
+	}
 
+	*users = append(*users, user)
 	return true, user
+}
+
+func AddUserController(user model.User, users *[]model.User) bool {
+	if !user.IsValid() {
+		return false
+	}
+
+	_, position := FindUserController(user.Email, user.Phone, users)
+	if position >= 0 {
+		return false
+	}
+
+	*users = append(*users, user)
+	return true
 }

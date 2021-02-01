@@ -37,7 +37,6 @@ func CreateUserUI(users *[]model.User) {
 		if position < 0 {
 			fmt.Print("Email or phone already registered.")
 		} else {
-			*users = append(*users, user)
 			fmt.Println("User successfully registered.")
 		}
 	} else {
