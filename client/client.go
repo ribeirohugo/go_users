@@ -18,6 +18,7 @@ func main() {
 	encoder := gob.NewEncoder(con)
 
 	var name, password, email, phone, option string
+	var users []model.User
 
 	for {
 		fmt.Println("Enter name: ")
@@ -41,10 +42,7 @@ func main() {
 		user := model.User{Name: name, Password: password, Email: email, Phone: phone, Timestamp: timestamp}
 
 		if user.IsValid() {
-			var users []model.User
 			users = append(users, user)
-			err = encoder.Encode(&users)
-			handleError("Error encoding user. ", err)
 		} else {
 			fmt.Println("Invalid user.")
 		}
@@ -58,6 +56,17 @@ func main() {
 		}
 	}
 
+	noUsers := len(users)
+	if noUsers > 0 {
+		err = encoder.Encode(&users)
+		handleError("Error encoding user. ", err)
+		fmt.Println(noUsers, " users sent.")
+	} else {
+		fmt.Println("No user was sent.")
+	}
+
 	err = con.Close()
 	handleFatalError("Error closing connection. ", err)
+
+	fmt.Println("Client closed.")
 }
