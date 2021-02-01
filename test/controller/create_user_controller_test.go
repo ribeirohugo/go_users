@@ -24,6 +24,8 @@ var user1 = model.User{Name: name, Password: password, Email: emailRepeated, Pho
 var user2 = model.User{Name: name, Password: password, Email: "email3@domain", Phone: "001234567", Timestamp: timestamp}
 var users = []model.User{user1, user2}
 
+var user3 = model.User{Name: name, Password: password, Email: "email4@domain", Phone: "000123456", Timestamp: timestamp}
+
 func TestInvalidName(t *testing.T) {
 	flag, _ := controller.CreateUserController(nameInvalid, password, email, phone, timestamp, &users)
 
@@ -73,6 +75,8 @@ func TestRepeatedUserPhone(t *testing.T) {
 }
 
 func TestUserSuccessfullyCreated(t *testing.T) {
+	expLength := len(users) + 1
+
 	flag, user := controller.CreateUserController(name, password, email, phone, timestamp, &users)
 
 	if !flag {
@@ -97,5 +101,43 @@ func TestUserSuccessfullyCreated(t *testing.T) {
 
 	if user.Timestamp != timestamp {
 		t.Errorf("User timestamp incorrect. Got: %d, want: %d.", user.Timestamp, timestamp)
+	}
+
+	currentLength := len(users)
+
+	if expLength != currentLength {
+		t.Errorf("Wrong expected length after creating user. Got: %d, want: %d.", currentLength, expLength)
+	}
+}
+
+func TestAddUserFail(t *testing.T) {
+	expLength := len(users)
+
+	flag := controller.AddUserController(user1, &users)
+
+	if flag {
+		t.Errorf("Error failing to add user. Got: %t, want: %t.", !flag, false)
+	}
+
+	currentLength := len(users)
+
+	if expLength != currentLength {
+		t.Errorf("Wrong expected length failing to add user. Got: %d, want: %d.", currentLength, expLength)
+	}
+}
+
+func TestAddUserSuccessfully(t *testing.T) {
+	expLength := len(users) + 1
+
+	flag := controller.AddUserController(user3, &users)
+
+	if !flag {
+		t.Errorf("Error failing to add user. Got: %t, want: %t.", !flag, true)
+	}
+
+	currentLength := len(users)
+
+	if expLength != currentLength {
+		t.Errorf("Wrong expected length after adding user. Got: %d, want: %d.", currentLength, expLength)
 	}
 }
