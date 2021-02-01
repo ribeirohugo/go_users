@@ -13,7 +13,7 @@ func CreateUserController(name string, password string, email string, phone stri
 	}
 
 	_, position := FindUserController(email, phone, users)
-	if position < 0 {
+	if position >= 0 {
 		return false, usr
 	}
 
