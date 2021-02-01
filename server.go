@@ -1,6 +1,7 @@
 package main
 
 import (
+	"./controller"
 	"./model"
 	"encoding/gob"
 	"fmt"
@@ -15,23 +16,28 @@ const (
 	portDefault = "8080"
 )
 
+var database []model.User
+
 func main() {
+	fmt.Println("Server started.")
+
+	controller.ReadUsersController(&database)
+
 	server := getAddress(os.Args)
 
 	con, err := net.Listen(network, server)
-	handleError("Error creating server. ", err)
+	handleFatalError("Error creating server. ", err)
+	defer con.Close()
+	handleFatalError("Error closing server. ", err)
 
 	for {
 		c, err := con.Accept()
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
+		handleError("Error accepting new connection.", err)
 		handleRequest(c)
 	}
 
-	err = con.Close()
-	handleError("Error closing server. ", err)
+	//err = con.Close()
+	//handleFatalError("Error closing server. ", err)
 }
 
 func handleRequest(con net.Conn) {
@@ -42,7 +48,19 @@ func handleRequest(con net.Conn) {
 	err := data.Decode(user)
 	handleError("Error decoding user. ", err)
 
-	fmt.Println()
+	if user.IsValid() {
+		fmt.Println(*user)
+
+		if controller.AddUserController(*user, &database) {
+			controller.SaveUsersController(database)
+			fmt.Print("User successfully saved.")
+		} else {
+			fmt.Print("User already exist in database.")
+		}
+
+	} else {
+		fmt.Println("Invalid user.")
+	}
 }
 
 func getAddress(arguments []string) string {
@@ -57,8 +75,14 @@ func getAddress(arguments []string) string {
 	return server
 }
 
+func handleFatalError(message string, err error) {
+	if err != nil {
+		log.Println(message, err)
+	}
+}
+
 func handleError(message string, err error) {
 	if err != nil {
-		log.Fatal(message, err)
+		log.Println(message, err)
 	}
 }
