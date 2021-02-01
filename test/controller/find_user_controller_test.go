@@ -42,7 +42,7 @@ func TestFindUserByEmailAndPhone(t *testing.T) {
 }
 
 func TestUserNotFound(t *testing.T) {
-	_, position := controller.FindUserController(email, phone, &users)
+	_, position := controller.FindUserController(emailInvalid, phoneInvalid, &users)
 
 	if position != -1 {
 		t.Errorf("Invalid user not found position return. Got: %d, want: %d.", position, -1)
