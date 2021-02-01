@@ -44,23 +44,27 @@ func handleRequest(con net.Conn) {
 	fmt.Printf("Serving %s\n", con.RemoteAddr().String())
 
 	data := gob.NewDecoder(con)
-	user := &model.User{}
-	err := data.Decode(user)
+
+	var users []model.User
+
+	err := data.Decode(&users)
 	handleError("Error decoding user. ", err)
 
-	if user.IsValid() {
-		fmt.Println(*user)
+	for i, _ := range users {
+		user := users[i]
 
-		if controller.AddUserController(*user, &database) {
-			controller.SaveUsersController(database)
-			fmt.Print("User successfully saved.")
+		if user.IsValid() {
+			if controller.AddUserController(user, &database) {
+				fmt.Println(user, " User successfully saved.")
+			} else {
+				fmt.Println(user, " User already exist in database.")
+			}
+
 		} else {
-			fmt.Print("User already exist in database.")
+			fmt.Println("Invalid user.")
 		}
-
-	} else {
-		fmt.Println("Invalid user.")
 	}
+	controller.SaveUsersController(database)
 }
 
 func getAddress(arguments []string) string {
