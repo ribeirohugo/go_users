@@ -1,9 +1,5 @@
 package main
 
-import (
-	"log"
-)
-
 const (
 	network     = "tcp"
 	hostDefault = "localhost:"
@@ -20,16 +16,4 @@ func getAddress(arguments []string) string {
 		server = hostDefault + portDefault
 	}
 	return server
-}
-
-func handleFatalError(message string, err error) {
-	if err != nil {
-		log.Fatal(message, err)
-	}
-}
-
-func handleError(message string, err error) {
-	if err != nil {
-		log.Fatal(message, err)
-	}
 }

@@ -3,9 +3,9 @@ package main
 import (
 	"./controller"
 	"./model"
+	"./util"
 	"encoding/gob"
 	"fmt"
-	"log"
 	"net"
 	"os"
 )
@@ -26,13 +26,13 @@ func main() {
 	server := getAddress(os.Args)
 
 	con, err := net.Listen(network, server)
-	handleFatalError("Error creating server. ", err)
+	util.HandleFatalError("Error creating server. ", err)
 	defer con.Close()
-	handleFatalError("Error closing server. ", err)
+	util.HandleFatalError("Error closing server. ", err)
 
 	for {
 		c, err := con.Accept()
-		handleError("Error accepting new connection.", err)
+		util.HandleError("Error accepting new connection.", err)
 		handleRequest(c)
 	}
 
@@ -48,7 +48,7 @@ func handleRequest(con net.Conn) {
 	var users []model.User
 
 	err := data.Decode(&users)
-	handleError("Error decoding user. ", err)
+	util.HandleError("Error decoding user. ", err)
 
 	for i, _ := range users {
 		user := users[i]
@@ -76,16 +76,4 @@ func getAddress(arguments []string) string {
 		server = hostDefault + portDefault
 	}
 	return server
-}
-
-func handleFatalError(message string, err error) {
-	if err != nil {
-		log.Println(message, err)
-	}
-}
-
-func handleError(message string, err error) {
-	if err != nil {
-		log.Println(message, err)
-	}
 }

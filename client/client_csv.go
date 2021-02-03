@@ -2,6 +2,7 @@ package main
 
 import (
 	"../model"
+	"../util"
 	"encoding/csv"
 	"encoding/gob"
 	"fmt"
@@ -17,7 +18,7 @@ func main() {
 	server := getAddress(arguments)
 
 	con, err := net.Dial(network, server)
-	handleFatalError("Error creating connection. ", err)
+	util.HandleFatalError("Error creating connection. ", err)
 
 	if len(arguments) < 3 {
 		fmt.Println("Invalid file path.")
@@ -27,16 +28,15 @@ func main() {
 	path := arguments[3]
 
 	file, err := os.Open(path)
-	handleFatalError("Error opening file.", err)
+	util.HandleFatalError("Error opening file.", err)
 	defer file.Close()
 
 	lines, err := csv.NewReader(file).ReadAll()
-	handleError("Error reading csv lines.", err)
+	util.HandleError("Error reading csv lines.", err)
 
 	var users []model.User
 
 	for i, _ := range lines {
-		fmt.Printf("i = %d; %s\n", i, lines[i][0])
 		flag, user := handleLine(lines[i][0], &users)
 
 		if flag {
@@ -49,11 +49,11 @@ func main() {
 	if len(users) > 0 {
 		encoder := gob.NewEncoder(con)
 		err := encoder.Encode(&users)
-		handleError("Error encoding users slice. ", err)
+		util.HandleError("Error encoding users slice. ", err)
 	}
 
 	err = con.Close()
-	handleFatalError("Error closing connection. ", err)
+	util.HandleFatalError("Error closing connection. ", err)
 }
 
 func handleLine(line string, users *[]model.User) (flag bool, usr model.User) {
