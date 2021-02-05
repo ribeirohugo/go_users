@@ -42,7 +42,7 @@ func apiReader(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	address := "http://" + getAddress(os.Args)
+	address := util.GetAddress(os.Args)
 
 	http.HandleFunc("/api", apiReader)
 	err := http.ListenAndServe(address, nil)

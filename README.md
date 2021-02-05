@@ -31,3 +31,11 @@ There is also a CSV loader to send users through TCP executing the following com
 ```
 go run client/client_csv.go client/util.go hostname port file.csv
 ```
+
+## Run HTTP Server
+
+You can launch an HTTP server by run the following command, that will allow you to receive JSON file with user objects slice through an HTTP request.
+
+```
+go run http_server.go
+```
