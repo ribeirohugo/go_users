@@ -11,11 +11,7 @@ import (
 	"sync"
 )
 
-const (
-	network     = "tcp"
-	hostDefault = "localhost:"
-	portDefault = "8080"
-)
+const network = "tcp"
 
 var database []model.User
 
@@ -24,7 +20,7 @@ func main() {
 
 	controller.ReadUsersController(&database)
 
-	server := getAddress(os.Args)
+	server := util.GetAddress(os.Args)
 
 	con, err := net.Listen(network, server)
 	util.HandleFatalError("Error creating server. ", err)
@@ -69,16 +65,4 @@ func handleRequest(con net.Conn, database *[]model.User) {
 	controller.SaveUsersController(*database)
 
 	mutex.Unlock()
-}
-
-func getAddress(arguments []string) string {
-	var server string
-	if len(arguments) >= 3 { //host + port
-		server = arguments[1] + ":" + arguments[2]
-	} else if len(arguments) == 2 { //port
-		server = hostDefault + arguments[1]
-	} else { //none
-		server = hostDefault + portDefault
-	}
-	return server
 }
