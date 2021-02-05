@@ -7,7 +7,7 @@ import (
 )
 
 func ReadUsersController(users *[]model.User) {
-	file, err := os.OpenFile(dataFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.Open(dataFile)
 	checkError("Error opening file.", err)
 
 	dataDecoder := gob.NewDecoder(file)

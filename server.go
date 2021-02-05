@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"sync"
 )
 
 const (
@@ -33,19 +34,21 @@ func main() {
 	for {
 		c, err := con.Accept()
 		util.HandleError("Error accepting new connection.", err)
-		handleRequest(c)
+		handleRequest(c, &database)
 	}
 
 	//err = con.Close()
 	//handleFatalError("Error closing server. ", err)
 }
 
-func handleRequest(con net.Conn) {
+func handleRequest(con net.Conn, database *[]model.User) {
 	fmt.Printf("Serving %s\n", con.RemoteAddr().String())
 
-	data := gob.NewDecoder(con)
-
 	var users []model.User
+	mutex := sync.Mutex{}
+	mutex.Lock()
+
+	data := gob.NewDecoder(con)
 
 	err := data.Decode(&users)
 	util.HandleError("Error decoding user. ", err)
@@ -54,7 +57,7 @@ func handleRequest(con net.Conn) {
 		user := users[i]
 
 		if user.IsValid() {
-			if controller.AddUserController(user, &database) {
+			if controller.AddUserController(user, database) {
 				fmt.Println(user, "User successfully saved.")
 			} else {
 				fmt.Println(user, "User already exists in database.")
@@ -63,7 +66,9 @@ func handleRequest(con net.Conn) {
 			fmt.Println("Invalid user.")
 		}
 	}
-	controller.SaveUsersController(database)
+	controller.SaveUsersController(*database)
+
+	mutex.Unlock()
 }
 
 func getAddress(arguments []string) string {
