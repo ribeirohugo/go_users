@@ -1,9 +1,10 @@
 package ui
 
 import (
-	"../controller"
-	"../model"
 	"fmt"
+
+	"github.com/ribeirohugo/go_users/internal/controller"
+	"github.com/ribeirohugo/go_users/model"
 )
 
 func FindUserUI(users *[]model.User) {

@@ -1,6 +1,8 @@
 package controller
 
-import "../model"
+import (
+	"github.com/ribeirohugo/go_users/model"
+)
 
 func UpdateUserController(name string, password string, email string, phone string, timestamp int, position int, users *[]model.User) bool {
 

@@ -1,10 +1,11 @@
 package controller
 
 import (
-	"../model"
 	"encoding/gob"
 	"log"
 	"os"
+
+	"github.com/ribeirohugo/go_users/model"
 )
 
 const dataFile string = "users.bin"

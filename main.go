@@ -1,9 +1,10 @@
 package main
 
 import (
-	"./model"
-	"./ui"
 	"fmt"
+
+	"github.com/ribeirohugo/go_users/internal/ui"
+	"github.com/ribeirohugo/go_users/model"
 )
 
 const OPTIONS int = 8

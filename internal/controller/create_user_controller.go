@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"../model"
+	"github.com/ribeirohugo/go_users/model"
 )
 
 func CreateUserController(name string, password string, email string, phone string, timestamp int, users *[]model.User) (flag bool, usr model.User) {

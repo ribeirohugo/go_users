@@ -1,9 +1,10 @@
 package controller
 
 import (
-	"../model"
 	"encoding/gob"
 	"os"
+
+	"github.com/ribeirohugo/go_users/model"
 )
 
 func ReadUsersController(users *[]model.User) {

@@ -1,6 +1,8 @@
 package controller
 
-import "../model"
+import (
+	"github.com/ribeirohugo/go_users/model"
+)
 
 func FindUserController(email string, phone string, users *[]model.User) (usr *model.User, position int) {
 

@@ -1,8 +1,9 @@
 package ui
 
 import (
-	"../model"
 	"fmt"
+
+	"github.com/ribeirohugo/go_users/model"
 )
 
 func PrintUsersUI(user []model.User) {
