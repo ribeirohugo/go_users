@@ -9,7 +9,7 @@ const (
 
 func HandleFatalError(message string, err error) {
 	if err != nil {
-		log.Println(message, err)
+		log.Fatal(message, err)
 	}
 }
 

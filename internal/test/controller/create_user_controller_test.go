@@ -1,9 +1,10 @@
 package test
 
 import (
-	"../../controller"
-	"../../model"
 	"testing"
+
+	"github.com/ribeirohugo/go_users/internal/controller"
+	"github.com/ribeirohugo/go_users/internal/model"
 )
 
 const name = "name"

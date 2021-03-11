@@ -1,7 +1,7 @@
 package test
 
 import (
-	model2 "github.com/ribeirohugo/go_users/internal/model"
+	"github.com/ribeirohugo/go_users/internal/model"
 	"testing"
 )
 
@@ -16,7 +16,7 @@ const passwordInvalid = "pass"
 const emailInvalid = "mail"
 const phoneInvalid = "phone"
 
-var user = model2.User{Name: name, Password: password, Email: email, Phone: phone, Timestamp: timestamp}
+var user = model.User{Name: name, Password: password, Email: email, Phone: phone, Timestamp: timestamp}
 
 func TestUserName(t *testing.T) {
 	if user.Name != name {
@@ -49,7 +49,7 @@ func TestTimestamp(t *testing.T) {
 }
 
 func TestInvalidName(t *testing.T) {
-	u := model2.User{Name: nameInvalid, Password: password, Email: email, Phone: phone, Timestamp: timestamp}
+	u := model.User{Name: nameInvalid, Password: password, Email: email, Phone: phone, Timestamp: timestamp}
 	flag := u.IsValid()
 	if flag {
 		t.Errorf("User name should return invalid. Got: %t, want: %t.", flag, false)
@@ -57,7 +57,7 @@ func TestInvalidName(t *testing.T) {
 }
 
 func TestInvalidPassword(t *testing.T) {
-	u := model2.User{Name: name, Password: passwordInvalid, Email: email, Phone: phone, Timestamp: timestamp}
+	u := model.User{Name: name, Password: passwordInvalid, Email: email, Phone: phone, Timestamp: timestamp}
 	flag := u.IsValid()
 	if flag {
 		t.Errorf("User password should return invalid. Got: %t, want: %t.", flag, false)
@@ -65,7 +65,7 @@ func TestInvalidPassword(t *testing.T) {
 }
 
 func TestInvalidEmail(t *testing.T) {
-	u := model2.User{Name: name, Password: password, Email: emailInvalid, Phone: phone, Timestamp: timestamp}
+	u := model.User{Name: name, Password: password, Email: emailInvalid, Phone: phone, Timestamp: timestamp}
 	flag := u.IsValid()
 	if flag {
 		t.Errorf("User email should return invalid. Got: %t, want: %t.", flag, false)
@@ -73,7 +73,7 @@ func TestInvalidEmail(t *testing.T) {
 }
 
 func TestInvalidPhone(t *testing.T) {
-	u := model2.User{Name: name, Password: password, Email: email, Phone: phoneInvalid, Timestamp: timestamp}
+	u := model.User{Name: name, Password: password, Email: email, Phone: phoneInvalid, Timestamp: timestamp}
 	flag := u.IsValid()
 	if flag {
 		t.Errorf("User phone should be invalid. Got: %t, want: %t.", flag, false)

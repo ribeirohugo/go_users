@@ -1,8 +1,9 @@
 package test
 
 import (
-	"../../controller"
 	"testing"
+
+	"github.com/ribeirohugo/go_users/internal/controller"
 )
 
 func TestRemoveUser(t *testing.T) {
