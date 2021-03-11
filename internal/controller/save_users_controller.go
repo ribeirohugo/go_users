@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/ribeirohugo/go_users/model"
+	"github.com/ribeirohugo/go_users/internal/model"
 )
 
 const dataFile string = "users.bin"

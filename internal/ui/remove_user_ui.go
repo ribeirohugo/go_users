@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/ribeirohugo/go_users/internal/controller"
-	"github.com/ribeirohugo/go_users/model"
+	"github.com/ribeirohugo/go_users/internal/model"
 )
 
 func RemoveUserUI(users *[]model.User) {

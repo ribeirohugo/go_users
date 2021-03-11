@@ -1,4 +1,4 @@
-package util
+package fault
 
 import "log"
 

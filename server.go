@@ -1,14 +1,15 @@
 package main
 
 import (
-	"./controller"
-	"./model"
-	"./util"
 	"encoding/gob"
 	"fmt"
 	"net"
 	"os"
 	"sync"
+
+	"github.com/ribeirohugo/go_users/internal/controller"
+	"github.com/ribeirohugo/go_users/internal/fault"
+	"github.com/ribeirohugo/go_users/internal/model"
 )
 
 const network = "tcp"
@@ -20,16 +21,16 @@ func main() {
 
 	controller.ReadUsersController(&database)
 
-	server := util.GetAddress(os.Args)
+	server := fault.GetAddress(os.Args)
 
 	con, err := net.Listen(network, server)
-	util.HandleFatalError("Error creating server. ", err)
+	fault.HandleFatalError("Error creating server. ", err)
 	defer con.Close()
-	util.HandleFatalError("Error closing server. ", err)
+	fault.HandleFatalError("Error closing server. ", err)
 
 	for {
 		c, err := con.Accept()
-		util.HandleError("Error accepting new connection.", err)
+		fault.HandleError("Error accepting new connection.", err)
 		handleRequest(c, &database)
 	}
 
@@ -47,7 +48,7 @@ func handleRequest(con net.Conn, database *[]model.User) {
 	data := gob.NewDecoder(con)
 
 	err := data.Decode(&users)
-	util.HandleError("Error decoding user. ", err)
+	fault.HandleError("Error decoding user. ", err)
 
 	for i, _ := range users {
 		user := users[i]

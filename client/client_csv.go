@@ -1,8 +1,6 @@
 package main
 
 import (
-	"../model"
-	"../util"
 	"encoding/csv"
 	"encoding/gob"
 	"fmt"
@@ -10,6 +8,9 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/ribeirohugo/go_users/internal/fault"
+	"github.com/ribeirohugo/go_users/internal/model"
 )
 
 func main() {
@@ -18,7 +19,7 @@ func main() {
 	server := getAddress(arguments)
 
 	con, err := net.Dial(network, server)
-	util.HandleFatalError("Error creating connection. ", err)
+	fault.HandleFatalError("Error creating connection. ", err)
 
 	if len(arguments) < 3 {
 		fmt.Println("Invalid file path.")
@@ -28,11 +29,11 @@ func main() {
 	path := arguments[3]
 
 	file, err := os.Open(path)
-	util.HandleFatalError("Error opening file.", err)
+	fault.HandleFatalError("Error opening file.", err)
 	defer file.Close()
 
 	lines, err := csv.NewReader(file).ReadAll()
-	util.HandleError("Error reading csv lines.", err)
+	fault.HandleError("Error reading csv lines.", err)
 
 	var users []model.User
 
@@ -49,11 +50,11 @@ func main() {
 	if len(users) > 0 {
 		encoder := gob.NewEncoder(con)
 		err := encoder.Encode(&users)
-		util.HandleError("Error encoding users slice. ", err)
+		fault.HandleError("Error encoding users slice. ", err)
 	}
 
 	err = con.Close()
-	util.HandleFatalError("Error closing connection. ", err)
+	fault.HandleFatalError("Error closing connection. ", err)
 }
 
 func handleLine(line string, users *[]model.User) (flag bool, usr model.User) {

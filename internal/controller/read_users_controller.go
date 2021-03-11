@@ -4,7 +4,7 @@ import (
 	"encoding/gob"
 	"os"
 
-	"github.com/ribeirohugo/go_users/model"
+	"github.com/ribeirohugo/go_users/internal/model"
 )
 
 func ReadUsersController(users *[]model.User) {

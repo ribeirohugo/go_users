@@ -1,14 +1,15 @@
 package main
 
 import (
-	"./controller"
-	"./model"
-	"./util"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
+
+	"github.com/ribeirohugo/go_users/internal/controller"
+	"github.com/ribeirohugo/go_users/internal/fault"
+	"github.com/ribeirohugo/go_users/internal/model"
 )
 
 func apiReader(w http.ResponseWriter, req *http.Request) {
@@ -42,9 +43,10 @@ func apiReader(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	address := util.GetAddress(os.Args)
+	address := fault.GetAddress(os.Args)
 
 	http.HandleFunc("/api", apiReader)
 	err := http.ListenAndServe(address, nil)
-	util.HandleFatalError("", err)
+
+	fault.HandleFatalError("", err)
 }
