@@ -1,0 +1,7 @@
+bin_path = "users.bin"
+
+connection_db = "docker"
+connection_host = "localhost"
+connection_password = "example"
+connection_port = 8081
+connection_user = "docker"

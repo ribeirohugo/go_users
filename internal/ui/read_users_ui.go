@@ -5,8 +5,8 @@ import (
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
-func ReadUsersUI(users *[]model.User) {
+func ReadUsersUI(users *[]model.User, binFile string) {
 
-	controller.ReadUsersController(users)
+	controller.ReadUsersController(users, binFile)
 
 }

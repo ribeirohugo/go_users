@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/ribeirohugo/go_users/internal/config"
+	"github.com/ribeirohugo/go_users/internal/fault"
 
 	"github.com/ribeirohugo/go_users/internal/model"
 	"github.com/ribeirohugo/go_users/internal/ui"
@@ -12,11 +14,12 @@ const OPTIONS int = 8
 var users []model.User
 
 func main() {
+	cfg, err := config.Load()
+	fault.HandleError("", err)
 
 	var option = 0
 
 	for option != OPTIONS {
-
 		fmt.Println("Select an option:\n" +
 			"1 - Create user\n" +
 			"2 - List users\n" +
@@ -41,9 +44,9 @@ func main() {
 		case 5:
 			ui.RemoveUserUI(&users)
 		case 6:
-			ui.ReadUsersUI(&users)
+			ui.ReadUsersUI(&users, cfg.BinFile)
 		case 7:
-			ui.SaveUsersUI(users)
+			ui.SaveUsersUI(users, cfg.BinFile)
 		case OPTIONS:
 			break
 		default:

@@ -7,8 +7,8 @@ import (
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
-func ReadUsersController(users *[]model.User) {
-	file, err := os.Open(dataFile)
+func ReadUsersController(users *[]model.User, binFile string) {
+	file, err := os.Open(binFile)
 	checkError("Error opening file.", err)
 
 	dataDecoder := gob.NewDecoder(file)

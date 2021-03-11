@@ -8,11 +8,8 @@ import (
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
-const dataFile string = "users.bin"
-
-func SaveUsersController(users []model.User) {
-
-	file, err := os.Create(dataFile)
+func SaveUsersController(users []model.User, binFile string) {
+	file, err := os.Create(binFile)
 	checkError("Error creating file.", err)
 
 	dataEncoder := gob.NewEncoder(file)
