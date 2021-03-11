@@ -7,16 +7,19 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/ribeirohugo/go_users/internal/config"
 	"github.com/ribeirohugo/go_users/internal/controller"
 	"github.com/ribeirohugo/go_users/internal/fault"
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
 func apiReader(w http.ResponseWriter, req *http.Request) {
+	cfg, err := config.Load()
+	fault.HandleFatalError("", err)
 
 	var inputUsers []model.User
 	var database []model.User
-	controller.ReadUsersController(&database)
+	controller.ReadUsersController(&database, cfg.BinFile)
 
 	//Write in console
 	fmt.Println("Remote Address: ", req.RemoteAddr)
@@ -36,7 +39,7 @@ func apiReader(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("[{\"Status\": \"Ok\"}]"))
 
-	controller.SaveUsersController(database)
+	controller.SaveUsersController(database, cfg.BinFile)
 
 	fmt.Println("Body: ", bodyStr)
 	fmt.Println("-------------------")

@@ -1,7 +1,19 @@
-bin_path = "users.bin"
+bin_file = "users.bin"
 
-connection_db = "docker"
-connection_host = "localhost"
-connection_password = "example"
-connection_port = 8081
-connection_user = "docker"
+http_host = ""
+http_port = ""
+
+mysql_db = "docker"
+mysql_host = "localhost"
+mysql_password = "example"
+mysql_port = 3306
+mysql_user = "root"
+
+postgres_db = "docker"
+postgres_host = "docker"
+postgres_password = "docker"
+postgres_port = 55000
+postgres_user = "docker"
+
+tcp_host = ""
+tcp_port = ""

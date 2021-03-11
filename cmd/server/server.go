@@ -7,6 +7,7 @@ import (
 	"os"
 	"sync"
 
+	"github.com/ribeirohugo/go_users/internal/config"
 	"github.com/ribeirohugo/go_users/internal/controller"
 	"github.com/ribeirohugo/go_users/internal/fault"
 	"github.com/ribeirohugo/go_users/internal/model"
@@ -17,9 +18,12 @@ const network = "tcp"
 var database []model.User
 
 func main() {
+	cfg, err := config.Load()
+	fault.HandleFatalError("", err)
+
 	fmt.Println("Server started.")
 
-	controller.ReadUsersController(&database)
+	controller.ReadUsersController(&database, cfg.BinFile)
 
 	server := fault.GetAddress(os.Args)
 
@@ -31,14 +35,14 @@ func main() {
 	for {
 		c, err := con.Accept()
 		fault.HandleError("Error accepting new connection.", err)
-		handleRequest(c, &database)
+		handleRequest(c, &database, cfg.BinFile)
 	}
 
 	//err = con.Close()
 	//handleFatalError("Error closing server. ", err)
 }
 
-func handleRequest(con net.Conn, database *[]model.User) {
+func handleRequest(con net.Conn, database *[]model.User, binFile string) {
 	fmt.Printf("Serving %s\n", con.RemoteAddr().String())
 
 	var users []model.User
@@ -63,7 +67,7 @@ func handleRequest(con net.Conn, database *[]model.User) {
 			fmt.Println("Invalid user.")
 		}
 	}
-	controller.SaveUsersController(*database)
+	controller.SaveUsersController(*database, binFile)
 
 	mutex.Unlock()
 }

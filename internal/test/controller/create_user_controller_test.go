@@ -62,7 +62,7 @@ func TestInvalidPhone(t *testing.T) {
 func TestRepeatedUserEmail(t *testing.T) {
 	flag, _ := controller.CreateUserController(name, password, emailRepeated, phone, timestamp, &users)
 
-	if !flag {
+	if flag {
 		t.Errorf("Repeated user email test. Got: %t, want: %t.", flag, false)
 	}
 }
@@ -70,7 +70,7 @@ func TestRepeatedUserEmail(t *testing.T) {
 func TestRepeatedUserPhone(t *testing.T) {
 	flag, _ := controller.CreateUserController(name, password, email, phoneRepeated, timestamp, &users)
 
-	if !flag {
+	if flag {
 		t.Errorf("Repeated user email test. Got: %t, want: %t.", flag, false)
 	}
 }
