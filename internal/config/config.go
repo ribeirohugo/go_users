@@ -10,7 +10,7 @@ import (
 const configFile = "config.toml"
 
 type Config struct {
-	BinFile string `toml:"bin_path"`
+	BinFile string `toml:"bin_file"`
 
 	HttpHost string `toml:"http_host"`
 	HttpPort int    `toml:"http_port"`

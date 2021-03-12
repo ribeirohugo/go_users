@@ -7,26 +7,6 @@ import (
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
-const name = "name"
-const password = "password"
-const email = "email@domain"
-const phone = "123456789"
-const timestamp = 20
-
-const nameInvalid = "na"
-const passwordInvalid = "pass"
-const emailInvalid = "mail"
-const phoneInvalid = "phone"
-
-const emailRepeated = "email2@domain"
-const phoneRepeated = "012345678"
-
-var user1 = model.User{Name: name, Password: password, Email: emailRepeated, Phone: phoneRepeated, Timestamp: timestamp}
-var user2 = model.User{Name: name, Password: password, Email: "email3@domain", Phone: "001234567", Timestamp: timestamp}
-var users = []model.User{user1, user2}
-
-var user3 = model.User{Name: name, Password: password, Email: "email4@domain", Phone: "000123456", Timestamp: timestamp}
-
 func TestInvalidName(t *testing.T) {
 	flag, _ := controller.CreateUserController(nameInvalid, password, email, phone, timestamp, &users)
 
@@ -117,7 +97,19 @@ func TestAddUserFail(t *testing.T) {
 	flag := controller.AddUserController(user1, &users)
 
 	if flag {
-		t.Errorf("Error failing to add user. Got: %t, want: %t.", !flag, false)
+		t.Errorf("Error failing to add user. Got: %t, want: %t.", flag, false)
+	}
+
+	invalidUser := model.User{
+		Name:     nameInvalid,
+		Password: passwordInvalid,
+		Email:    emailInvalid,
+		Phone:    phoneInvalid,
+	}
+	flag = controller.AddUserController(invalidUser, &users)
+
+	if flag {
+		t.Errorf("Error failing to add user. Got: %t, want: %t.", flag, false)
 	}
 
 	currentLength := len(users)

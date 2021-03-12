@@ -4,14 +4,14 @@ import (
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
-func FindUserController(email string, phone string, users *[]model.User) (usr *model.User, position int) {
+func FindUserController(email string, phone string, users *[]model.User) (*model.User, int) {
 
-	if email == "" {
+	if phone == "" && email == "" {
+		return &model.User{}, -1
+	} else if email == "" {
 		return findUserByPhone(phone, users)
 	} else if phone == "" {
 		return findUserByEmail(email, users)
-	} else if phone == "" && email == "" {
-		return usr, -1
 	}
 
 	var cont = 0
@@ -24,10 +24,10 @@ func FindUserController(email string, phone string, users *[]model.User) (usr *m
 		}
 		cont++
 	}
-	return usr, -1
+	return &model.User{}, -1
 }
 
-func findUserByEmail(email string, users *[]model.User) (usr *model.User, position int) {
+func findUserByEmail(email string, users *[]model.User) (*model.User, int) {
 	var cont = 0
 
 	for _, user := range *users {
@@ -36,10 +36,10 @@ func findUserByEmail(email string, users *[]model.User) (usr *model.User, positi
 		}
 		cont++
 	}
-	return usr, -1
+	return &model.User{}, -1
 }
 
-func findUserByPhone(phone string, users *[]model.User) (usr *model.User, position int) {
+func findUserByPhone(phone string, users *[]model.User) (*model.User, int) {
 	var cont = 0
 
 	for _, user := range *users {
@@ -48,5 +48,5 @@ func findUserByPhone(phone string, users *[]model.User) (usr *model.User, positi
 		}
 		cont++
 	}
-	return usr, -1
+	return &model.User{}, -1
 }

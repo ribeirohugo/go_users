@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/gob"
+	"github.com/ribeirohugo/go_users/internal/fault"
 	"os"
 
 	"github.com/ribeirohugo/go_users/internal/model"
@@ -9,11 +10,11 @@ import (
 
 func ReadUsersController(users *[]model.User, binFile string) {
 	file, err := os.Open(binFile)
-	checkError("Error opening file.", err)
+	fault.HandleFatalError("Error opening file.", err)
 
 	dataDecoder := gob.NewDecoder(file)
 	err = dataDecoder.Decode(&users)
 
 	err = file.Close()
-	checkError("Error closing file.", err)
+	fault.HandleFatalError("Error closing file.", err)
 }

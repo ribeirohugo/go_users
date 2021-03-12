@@ -2,7 +2,7 @@ package controller
 
 import (
 	"encoding/gob"
-	"log"
+	"github.com/ribeirohugo/go_users/internal/fault"
 	"os"
 
 	"github.com/ribeirohugo/go_users/internal/model"
@@ -10,19 +10,11 @@ import (
 
 func SaveUsersController(users []model.User, binFile string) {
 	file, err := os.Create(binFile)
-	checkError("Error creating file.", err)
+	fault.HandleFatalError("Error creating file.", err)
 
 	dataEncoder := gob.NewEncoder(file)
 	dataEncoder.Encode(users)
 
 	err = file.Close()
-	checkError("Error closing file.", err)
-}
-
-func checkError(message string, err error) bool {
-	if err != nil {
-		log.Fatal(message, err)
-		return true
-	}
-	return false
+	fault.HandleFatalError("Error closing file.", err)
 }
