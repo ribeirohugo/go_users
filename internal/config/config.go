@@ -9,32 +9,26 @@ import (
 
 const configFile = "config.toml"
 
-type Config struct {
-	BinFile string `toml:"bin_file"`
-
-	CsvFile string `toml:"csv_file"`
-
-	HttpHost string `toml:"http_host"`
-	HttpPort int    `toml:"http_port"`
-
-	MysqlDb       string `toml:"mysql_db"`
-	MysqlHost     string `toml:"mysql_host"`
-	MysqlPassword string `toml:"mysql_password"`
-	MysqlPort     int    `toml:"mysql_port"`
-	MysqlUser     string `toml:"mysql_user"`
-
-	PostgresDb       string `toml:"postgres_db"`
-	PostgresHost     string `toml:"postgres_host"`
-	PostgresPassword string `toml:"postgres_password"`
-	PostgresPort     int    `toml:"postgres_port"`
-	PostgresUser     string `toml:"postgres_user"`
-
-	TcpHost string `toml:"tcp_host"`
-	TcpPort int    `toml:"tcp_port"`
+type Db struct {
+	Db       string `toml:"db"`
+	Host     string `toml:"host"`
+	Password string `toml:"password"`
+	Port     int    `toml:"port"`
+	User     string `toml:"user"`
 }
 
-func Load() (Config, error) {
-	filePath := configFile
+type Config struct {
+	BinPath string `toml:"bin_path"`
+	CsvPath string `toml:"csv_path"`
+
+	HttpHost string `toml:"http_host"`
+	TcpHost  string `toml:"tcp_host"`
+
+	MySql    Db `toml:"mysql"`
+	Postgres Db `toml:"postgres"`
+}
+
+func Load(filePath string) (Config, error) {
 
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -47,7 +41,13 @@ func Load() (Config, error) {
 	}
 	_ = file.Close()
 
-	var config Config
+	config := Config{
+		BinPath:  "users.bin",
+		CsvPath:  "users.csv",
+		MySql:    Db{},
+		Postgres: Db{},
+	}
+
 	err = toml.Unmarshal(bytes, &config)
 	if err != nil {
 		return Config{}, err

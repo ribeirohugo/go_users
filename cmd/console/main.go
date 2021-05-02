@@ -9,17 +9,20 @@ import (
 	"github.com/ribeirohugo/go_users/internal/ui"
 )
 
-const OPTIONS int = 8
+const (
+	configFile     = "config.toml"
+	options    int = 8
+)
 
 var users []model.User
 
 func main() {
-	cfg, err := config.Load()
+	cfg, err := config.Load(configFile)
 	fault.HandleError("", err)
 
 	var option = 0
 
-	for option != OPTIONS {
+	for option != options {
 		fmt.Println("Select an option:\n" +
 			"1 - Create user\n" +
 			"2 - List users\n" +
@@ -44,10 +47,10 @@ func main() {
 		case 5:
 			ui.RemoveUserUI(&users)
 		case 6:
-			ui.ReadUsersUI(&users, cfg.BinFile)
+			ui.ReadUsersUI(&users, cfg.BinPath)
 		case 7:
-			ui.SaveUsersUI(users, cfg.BinFile)
-		case OPTIONS:
+			ui.SaveUsersUI(users, cfg.BinPath)
+		case options:
 			break
 		default:
 			fmt.Println("Invalid option.")

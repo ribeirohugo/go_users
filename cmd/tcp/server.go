@@ -4,7 +4,6 @@ import (
 	"encoding/gob"
 	"fmt"
 	"net"
-	"os"
 	"sync"
 
 	"github.com/ribeirohugo/go_users/internal/config"
@@ -13,29 +12,29 @@ import (
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
-const network = "tcp"
+const (
+	configFile = "config.toml"
+	network    = "tcp"
+)
 
 var database []model.User
 
 func main() {
-	cfg, err := config.Load()
+	cfg, err := config.Load(configFile)
 	fault.HandleFatalError("", err)
 
 	fmt.Println("Server started.")
 
-	controller.ReadUsersController(&database, cfg.BinFile)
+	controller.ReadUsersController(&database, cfg.BinPath)
 
-	server := fault.GetAddress(os.Args)
-
-	con, err := net.Listen(network, server)
+	con, err := net.Listen(network, cfg.TcpHost)
 	fault.HandleFatalError("Error creating server. ", err)
 	defer con.Close()
-	fault.HandleFatalError("Error closing server. ", err)
 
 	for {
 		c, err := con.Accept()
 		fault.HandleError("Error accepting new connection.", err)
-		handleRequest(c, &database, cfg.BinFile)
+		handleRequest(c, &database, cfg.BinPath)
 	}
 
 	//err = con.Close()

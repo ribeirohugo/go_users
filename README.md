@@ -3,38 +3,81 @@
 It allows to create, update, remove and list users, persist them to a binary file.
 You can use a console to manage data, or a server that receives information through a TCP connection.
 
-## Run server
+This project is the first one I'm creating using Go and it aims to be a way to explore Go functionalities and learn more about this language.
+It will be improved as long as I will get more expertise programming with Go.
 
-You can run your server using the following command and replacing `hostname` and `port` values:
+## 1. Configurations
+
+Fulfill the configuration file ``config.toml`` with the needed setups in order to use Simple Users different applications.
+
+| Parameter | Description | Type | Default | Required |
+|:---|:---|:---|:---|:---|
+| ``bin_path`` | Main binary file to persist user data. | `string` | `users.bin` | **NO** |
+| ``csv_path`` | Csv file path to be used in tcp client. | `string` | `users.csv` | **NO** |
+| ``http_host`` | Http host address to be used in http server app. | `string` | ` ` | **YES** |
+| ``tcp_host`` | Tcp host address to be used in tcp server. | `string` | ` ` | **YES** |
+| ``[mysql]`` | MySql database config data. | `Db` | ` ` | **YES** |
+| ``[postgres]`` | Postgres database config data. | `Db` | ` ` | **YES** |
+
+### 1.1. Database type
+
+To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
+
+| Parameter | Description | Type | Default | Required |
+|:---|:---|:---|:---|:---|
+| ``db`` | Database name. | `string` | ` ` | **YES** |
+| ``host`` | Database host. | `string` | ` ` | **YES** |
+| ``password`` | Database password. | `string` | ` ` | **YES** |
+| ``port`` | Database port. | `int` | ` ` | **YES** |
+| ``user`` | Database user with needed privileges over database. | `string` | ` ` | **YES** |
+
+## 2. Simple Console
+
+Manage users by using a menu console with all the options you need: since load a file, to execute CRUD operations.
+To use Simple Console just run ``make run`` or the following code:
 
 ```
-run go ./cmd/server/server.go <hostname> <port>
+run go ./cmd/console/main.go
 ```
 
-You can also run the server by just inserting `port` value assuming hostname will be `localhost`:
+## 3. Tcp Application
+
+### 3.1. Run server
+
+To run Tcp Application you may firstly run Go Users server by run ``make tcp-server`` or the following command:
 
 ```
-run go ./cmd/server/server.go <port>
+run go ./cmd/tcp/server.go
 ```
 
-## Run client
+### 3.2. Tcp Client Console
 
-Client can be used independently of main project, in order to send information to server through TCP.
-There are two built-in examples using go in client folder: the console mode and the CSV reader mode. To run console mode run the following command:
+Using client console allows inserting new users into the binary through command line.
 
-```
-run go ./cmd/client/client_console.go <hostname> <port>
-```
-
-There is also a CSV loader to send users through TCP executing the following command:
+To run console mode run ``make tcp-client-console`` or the following command:
 
 ```
-go run ./cmd/client/client_csv.go <hostname> <port> <file.csv>
+run go ./cmd/tcp/client_console.go
 ```
 
-## Run HTTP Server
+### 3.3. Tcp Csv Client
+
+There is also a CSV loader to send users through a TCP connection to server.
+Fill the config file ``csv_path`` attribute Csv to the Csv file you want to send.
+Csv rows should follow this pattern:
+
+``<Name>;<Password>;<Email>;<Phone>``
+
+To run Csv Client run make ``tcp-client-csv`` or the following command:
+
+```
+go run ./cmd/tcp/client_csv.go
+```
+
+## 4. HTTP Server
 
 You can launch an HTTP server by run the following command, that will allow you to receive JSON files with user objects slice through an HTTP request.
+Run ``make http-server`` or:
 
 ```
 go run ./cmd/server/server_http.go

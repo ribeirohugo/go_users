@@ -9,31 +9,24 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ribeirohugo/go_users/internal/config"
 	"github.com/ribeirohugo/go_users/internal/fault"
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
 func main() {
-	arguments := os.Args
+	cfg, err := config.Load(configFile)
+	fault.HandleError("", err)
 
-	server := getAddress(arguments)
-
-	con, err := net.Dial(network, server)
+	con, err := net.Dial(network, cfg.HttpHost)
 	fault.HandleFatalError("Error creating connection. ", err)
 
-	if len(arguments) < 3 {
-		fmt.Println("Invalid file path.")
-		return
-	}
-
-	path := arguments[3]
-
-	file, err := os.Open(path)
-	fault.HandleFatalError("Error opening file.", err)
+	file, err := os.Open(cfg.CsvPath)
+	fault.HandleFatalError("Error opening Csv file.", err)
 	defer file.Close()
 
 	lines, err := csv.NewReader(file).ReadAll()
-	fault.HandleError("Error reading csv lines.", err)
+	fault.HandleError("Error reading Csv lines.", err)
 
 	var users []model.User
 
