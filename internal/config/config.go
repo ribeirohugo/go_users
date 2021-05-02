@@ -17,20 +17,15 @@ type Db struct {
 	User     string `toml:"user"`
 }
 
-type Host struct {
-	Host string `toml:"host"`
-	Port int    `toml:"port"`
-}
-
 type Config struct {
 	BinPath string `toml:"bin_path"`
 	CsvPath string `toml:"csv_path"`
 
+	HttpHost string `toml:"http_host"`
+	TcpHost  string `toml:"tcp_host"`
+
 	MySql    Db `toml:"mysql"`
 	Postgres Db `toml:"postgres"`
-
-	HttpHost Host `toml:"http_host"`
-	TcpHost  Host `toml:"tcp_host"`
 }
 
 func Load() (Config, error) {
@@ -50,8 +45,6 @@ func Load() (Config, error) {
 	config := Config{
 		MySql:    Db{},
 		Postgres: Db{},
-		HttpHost: Host{},
-		TcpHost:  Host{},
 	}
 
 	err = toml.Unmarshal(bytes, &config)

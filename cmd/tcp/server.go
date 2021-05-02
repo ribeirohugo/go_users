@@ -4,7 +4,6 @@ import (
 	"encoding/gob"
 	"fmt"
 	"net"
-	"os"
 	"sync"
 
 	"github.com/ribeirohugo/go_users/internal/config"
@@ -25,12 +24,9 @@ func main() {
 
 	controller.ReadUsersController(&database, cfg.BinPath)
 
-	server := fault.GetAddress(os.Args)
-
-	con, err := net.Listen(network, server)
+	con, err := net.Listen(network, cfg.TcpHost)
 	fault.HandleFatalError("Error creating server. ", err)
 	defer con.Close()
-	fault.HandleFatalError("Error closing server. ", err)
 
 	for {
 		c, err := con.Accept()

@@ -4,19 +4,18 @@ import (
 	"encoding/gob"
 	"fmt"
 	"net"
-	"os"
 	"time"
 
+	"github.com/ribeirohugo/go_users/internal/config"
 	"github.com/ribeirohugo/go_users/internal/fault"
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
-const network = "tcp"
-
 func main() {
-	server := fault.GetAddress(os.Args)
+	cfg, err := config.Load()
+	fault.HandleError("", err)
 
-	con, err := net.Dial(network, server)
+	con, err := net.Dial(network, cfg.TcpHost)
 	fault.HandleError("Error creating connection. ", err)
 
 	encoder := gob.NewEncoder(con)
@@ -64,6 +63,7 @@ func main() {
 	if noUsers > 0 {
 		err = encoder.Encode(&users)
 		fault.HandleError("Error encoding user. ", err)
+
 		fmt.Println(noUsers, " users sent.")
 	} else {
 		fmt.Println("No user was sent.")
