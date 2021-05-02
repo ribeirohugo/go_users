@@ -16,7 +16,7 @@ import (
 func main() {
 	arguments := os.Args
 
-	server := getAddress(arguments)
+	server := fault.GetAddress(arguments)
 
 	con, err := net.Dial(network, server)
 	fault.HandleFatalError("Error creating connection. ", err)

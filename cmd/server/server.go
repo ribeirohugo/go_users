@@ -23,7 +23,7 @@ func main() {
 
 	fmt.Println("Server started.")
 
-	controller.ReadUsersController(&database, cfg.BinFile)
+	controller.ReadUsersController(&database, cfg.BinPath)
 
 	server := fault.GetAddress(os.Args)
 
@@ -35,7 +35,7 @@ func main() {
 	for {
 		c, err := con.Accept()
 		fault.HandleError("Error accepting new connection.", err)
-		handleRequest(c, &database, cfg.BinFile)
+		handleRequest(c, &database, cfg.BinPath)
 	}
 
 	//err = con.Close()

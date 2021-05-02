@@ -9,28 +9,28 @@ import (
 
 const configFile = "config.toml"
 
+type Db struct {
+	Db       string `toml:"db"`
+	Host     string `toml:"host"`
+	Password string `toml:"password"`
+	Port     int    `toml:"port"`
+	User     string `toml:"user"`
+}
+
+type Host struct {
+	Host string `toml:"host"`
+	Port int    `toml:"port"`
+}
+
 type Config struct {
-	BinFile string `toml:"bin_file"`
+	BinPath string `toml:"bin_path"`
+	CsvPath string `toml:"csv_path"`
 
-	CsvFile string `toml:"csv_file"`
+	MySql    Db `toml:"mysql"`
+	Postgres Db `toml:"postgres"`
 
-	HttpHost string `toml:"http_host"`
-	HttpPort int    `toml:"http_port"`
-
-	MysqlDb       string `toml:"mysql_db"`
-	MysqlHost     string `toml:"mysql_host"`
-	MysqlPassword string `toml:"mysql_password"`
-	MysqlPort     int    `toml:"mysql_port"`
-	MysqlUser     string `toml:"mysql_user"`
-
-	PostgresDb       string `toml:"postgres_db"`
-	PostgresHost     string `toml:"postgres_host"`
-	PostgresPassword string `toml:"postgres_password"`
-	PostgresPort     int    `toml:"postgres_port"`
-	PostgresUser     string `toml:"postgres_user"`
-
-	TcpHost string `toml:"tcp_host"`
-	TcpPort int    `toml:"tcp_port"`
+	HttpHost Host `toml:"http_host"`
+	TcpHost  Host `toml:"tcp_host"`
 }
 
 func Load() (Config, error) {
@@ -47,7 +47,13 @@ func Load() (Config, error) {
 	}
 	_ = file.Close()
 
-	var config Config
+	config := Config{
+		MySql:    Db{},
+		Postgres: Db{},
+		HttpHost: Host{},
+		TcpHost:  Host{},
+	}
+
 	err = toml.Unmarshal(bytes, &config)
 	if err != nil {
 		return Config{}, err

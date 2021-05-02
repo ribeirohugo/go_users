@@ -44,9 +44,9 @@ func main() {
 		case 5:
 			ui.RemoveUserUI(&users)
 		case 6:
-			ui.ReadUsersUI(&users, cfg.BinFile)
+			ui.ReadUsersUI(&users, cfg.BinPath)
 		case 7:
-			ui.SaveUsersUI(users, cfg.BinFile)
+			ui.SaveUsersUI(users, cfg.BinPath)
 		case OPTIONS:
 			break
 		default:

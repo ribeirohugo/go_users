@@ -19,7 +19,7 @@ func apiReader(w http.ResponseWriter, req *http.Request) {
 
 	var inputUsers []model.User
 	var database []model.User
-	controller.ReadUsersController(&database, cfg.BinFile)
+	controller.ReadUsersController(&database, cfg.BinPath)
 
 	//Write in console
 	fmt.Println("Remote Address: ", req.RemoteAddr)
@@ -39,7 +39,7 @@ func apiReader(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("[{\"Status\": \"Ok\"}]"))
 
-	controller.SaveUsersController(database, cfg.BinFile)
+	controller.SaveUsersController(database, cfg.BinPath)
 
 	fmt.Println("Body: ", bodyStr)
 	fmt.Println("-------------------")

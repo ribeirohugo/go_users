@@ -12,17 +12,17 @@ func main() {
 
 	con := model.PostgresCon{
 		Config: model.Config{
-			Host:     cfg.PostgresHost,
-			Port:     cfg.PostgresPort,
-			User:     cfg.PostgresUser,
-			Password: cfg.PostgresPassword,
-			Db:       cfg.PostgresDb,
+			Host:     cfg.Postgres.Host,
+			Port:     cfg.Postgres.Port,
+			User:     cfg.Postgres.User,
+			Password: cfg.Postgres.Password,
+			Db:       cfg.Postgres.Db,
 		},
 	}
 
 	db := con.New()
 
-	_, err = db.Query("SELECT ( * ) FROM land_registry_price_paid_uk")
+	_, err = db.Query("SELECT ( * ) FROM column")
 	fault.HandleFatalError("", err)
 
 	err = db.Ping()
