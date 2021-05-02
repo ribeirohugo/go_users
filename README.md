@@ -16,6 +16,8 @@ Fulfill the configuration file ``config.toml`` with the needed setups in order t
 | ``csv_path`` | Csv file path to be used in tcp client. | `string` | `users.csv` | **NO** |
 | ``http_host`` | Http host address to be used in http server app. | `string` | ` ` | **YES** |
 | ``tcp_host`` | Tcp host address to be used in tcp server. | `string` | ` ` | **YES** |
+| ``[mysql]`` | MySql database config data. | `Db` | ` ` | **YES** |
+| ``[postgres]`` | Postgres database config data. | `Db` | ` ` | **YES** |
 
 ### 1.1. Database type
 
