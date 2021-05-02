@@ -12,6 +12,8 @@ const configFile = "config.toml"
 type Config struct {
 	BinFile string `toml:"bin_file"`
 
+	CsvFile string `toml:"csv_file"`
+
 	HttpHost string `toml:"http_host"`
 	HttpPort int    `toml:"http_port"`
 

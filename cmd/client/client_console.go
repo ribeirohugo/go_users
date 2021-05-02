@@ -11,8 +11,10 @@ import (
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
+const network = "tcp"
+
 func main() {
-	server := getAddress(os.Args)
+	server := fault.GetAddress(os.Args)
 
 	con, err := net.Dial(network, server)
 	fault.HandleError("Error creating connection. ", err)
