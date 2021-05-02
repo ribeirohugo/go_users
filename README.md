@@ -10,6 +10,25 @@ It will be improved as long as I will get more expertise programming with Go.
 
 Fulfill the configuration file ``config.toml`` with the needed setups in order to use Simple Users different applications.
 
+| Parameter | Description | Type | Default | Required |
+|:---|:---|:---|:---|:---|
+| ``bin_path`` | Main binary file to persist user data. | `string` | `users.bin` | **NO** |
+| ``csv_path`` | Csv file path to be used in tcp client. | `string` | `users.csv` | **NO** |
+| ``http_host`` | Http host address to be used in http server app. | `string` | ` ` | **YES** |
+| ``tcp_host`` | Tcp host address to be used in tcp server. | `string` | ` ` | **YES** |
+
+### 1.1. Database type
+
+To set up ``[mysql]`` and ``[postgres]`` use the following parameters:
+
+| Parameter | Description | Type | Default | Required |
+|:---|:---|:---|:---|:---|
+| ``db`` | Database name. | `string` | ` ` | **YES** |
+| ``host`` | Database host. | `string` | ` ` | **YES** |
+| ``password`` | Database password. | `string` | ` ` | **YES** |
+| ``port`` | Database port. | `int` | ` ` | **YES** |
+| ``user`` | Database user with needed privileges over database. | `string` | ` ` | **YES** |
+
 ## 2. Simple Console
 
 Manage users by using a menu console with all the options you need: since load a file, to execute CRUD operations.

@@ -43,6 +43,8 @@ func Load() (Config, error) {
 	_ = file.Close()
 
 	config := Config{
+		BinPath:  "users.bin",
+		CsvPath:  "users.csv",
 		MySql:    Db{},
 		Postgres: Db{},
 	}
