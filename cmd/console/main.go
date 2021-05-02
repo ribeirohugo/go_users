@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/ribeirohugo/go_users/internal/config"
 	"github.com/ribeirohugo/go_users/internal/fault"
-
 	"github.com/ribeirohugo/go_users/internal/model"
 	"github.com/ribeirohugo/go_users/internal/ui"
 )

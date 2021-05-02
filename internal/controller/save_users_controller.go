@@ -2,9 +2,9 @@ package controller
 
 import (
 	"encoding/gob"
-	"github.com/ribeirohugo/go_users/internal/fault"
 	"os"
 
+	"github.com/ribeirohugo/go_users/internal/fault"
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
