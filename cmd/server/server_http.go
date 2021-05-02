@@ -4,16 +4,24 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"net/http"
-	"os"
-
 	"github.com/ribeirohugo/go_users/internal/config"
 	"github.com/ribeirohugo/go_users/internal/controller"
 	"github.com/ribeirohugo/go_users/internal/fault"
 	"github.com/ribeirohugo/go_users/internal/model"
+	"net/http"
 )
 
 const configFile = "config.toml"
+
+func main() {
+	cfg, err := config.Load(configFile)
+	fault.HandleError("", err)
+
+	http.HandleFunc("/api", apiReader)
+	err = http.ListenAndServe(cfg.HttpHost, nil)
+
+	fault.HandleFatalError("", err)
+}
 
 func apiReader(w http.ResponseWriter, req *http.Request) {
 	cfg, err := config.Load(configFile)
@@ -45,13 +53,4 @@ func apiReader(w http.ResponseWriter, req *http.Request) {
 
 	fmt.Println("Body: ", bodyStr)
 	fmt.Println("-------------------")
-}
-
-func main() {
-	address := fault.GetAddress(os.Args)
-
-	http.HandleFunc("/api", apiReader)
-	err := http.ListenAndServe(address, nil)
-
-	fault.HandleFatalError("", err)
 }
