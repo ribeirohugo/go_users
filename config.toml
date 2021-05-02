@@ -1,19 +1,19 @@
-bin_file = "users.bin"
+bin_path = "users.bin"
+csv_path = "users.csv"
 
-http_host = ""
-http_port = ""
+tcp_host = "localhost:8080"
+http_host = "localhost:8081"
 
-mysql_db = "docker"
-mysql_host = "localhost"
-mysql_password = "example"
-mysql_port = 3306
-mysql_user = "root"
+[mysql]
+db = "docker"
+host = "localhost"
+password = "example"
+port = 3306
+user = "root"
 
-postgres_db = "docker"
-postgres_host = "docker"
-postgres_password = "docker"
-postgres_port = 55000
-postgres_user = "docker"
-
-tcp_host = ""
-tcp_port = ""
+[postgres]
+db = "docker"
+host = "docker"
+password = "docker"
+port = 55000
+user = "docker"
