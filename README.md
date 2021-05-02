@@ -37,7 +37,7 @@ Manage users by using a menu console with all the options you need: since load a
 To use Simple Console just run ``make run`` or the following code:
 
 ```
-run go ./cmd/tcp/server.go
+run go ./cmd/console/main.go
 ```
 
 ## 3. Tcp Application
