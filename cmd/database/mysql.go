@@ -6,8 +6,10 @@ import (
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
+const configFile = "config.toml"
+
 func main() {
-	cfg, err := config.Load()
+	cfg, err := config.Load(configFile)
 	fault.HandleFatalError("", err)
 
 	con := model.MysqlCon{

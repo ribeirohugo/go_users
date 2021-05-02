@@ -28,8 +28,7 @@ type Config struct {
 	Postgres Db `toml:"postgres"`
 }
 
-func Load() (Config, error) {
-	filePath := configFile
+func Load(filePath string) (Config, error) {
 
 	file, err := os.Open(filePath)
 	if err != nil {

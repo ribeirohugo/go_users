@@ -12,12 +12,15 @@ import (
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
-const network = "tcp"
+const (
+	configFile = "config.toml"
+	network    = "tcp"
+)
 
 var database []model.User
 
 func main() {
-	cfg, err := config.Load()
+	cfg, err := config.Load(configFile)
 	fault.HandleFatalError("", err)
 
 	fmt.Println("Server started.")

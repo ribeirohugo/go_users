@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	cfg, err := config.Load()
+	cfg, err := config.Load(configFile)
 	fault.HandleError("", err)
 
 	con, err := net.Dial(network, cfg.TcpHost)

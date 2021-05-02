@@ -13,8 +13,10 @@ import (
 	"github.com/ribeirohugo/go_users/internal/model"
 )
 
+const configFile = "config.toml"
+
 func apiReader(w http.ResponseWriter, req *http.Request) {
-	cfg, err := config.Load()
+	cfg, err := config.Load(configFile)
 	fault.HandleFatalError("", err)
 
 	var inputUsers []model.User

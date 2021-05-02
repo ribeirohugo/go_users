@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	cfg, err := config.Load()
+	cfg, err := config.Load(configFile)
 	fault.HandleFatalError("", err)
 
 	con := model.PostgresCon{
